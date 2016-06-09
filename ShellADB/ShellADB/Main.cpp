@@ -20,28 +20,9 @@ void writeFile(string ip_connect);
 void readFile(){
 	
 	string data;
-
-	//FILE *f;
-	//int n = 0;
-	//fopen_s(&f, FILE_NAME, "r");
-
-	//if (f == NULL){
-	//	cout << "loi file rong" << endl;
-	//}
-	//else{
-	//	fscanf_s(f, "%d", &n);
-	//	for (int i = 0; i < n; ++i) {
-	//		fscanf_s(f, "%d", &data[i]);   // truyền vào con trỏ file , tên file cần đọc , nhập dl vào mảng a
-	//	}
-	//}
-	//fclose(f);
-
-	//system();
-
 	fstream f;
 	//string line;
 	f.open(FILE_NAME , ios::in);
-
 	
 	while (!f.eof())
 	{
@@ -60,11 +41,12 @@ void writeFile(string ip_connect , string action)
 {
 	fstream f;
 	f.open(FILE_NAME, ios::out);   // dùng chung file
-	string data = action + ip_connect;
+	string data = action + ip_connect + "\n";
 	f << data;
 
 	f.close();
 }
+
 
 int Menu(){
 
@@ -114,6 +96,9 @@ void main(){
 		case 4:
 			system("ipconfig");
 			break;
+		case 5:
+			ReadLine();
+			break;
 		default:
 			cout << " nhap sai lua chon ";
 			break;
@@ -122,5 +107,6 @@ void main(){
 		system("cls");
 	} while (cv != 0);
 	
+	//getchar();
 	system("pause");
 }
