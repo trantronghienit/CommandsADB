@@ -30,6 +30,7 @@ void readFile(){
 		//data += line;
 	}
 	f.close();
+
 	// truyền lệnh 
 	system(data.c_str());
 
@@ -37,7 +38,17 @@ void readFile(){
 
 
 // ghi file
-void writeFile(string ip_connect , string action)
+void writeFile(string shell)
+{
+	fstream f;
+	f.open(FILE_NAME, ios::out);   // dùng chung file
+	string data = shell;
+	f << data;
+
+	f.close();
+}
+
+void writeFile(string action, string ip_connect)
 {
 	fstream f;
 	f.open(FILE_NAME, ios::out);   // dùng chung file
@@ -58,6 +69,7 @@ int Menu(){
 		cout << "2. connect ADB qua mang ." << endl; k++;
 		cout << "3. Disconnect ADB qua mang. " << endl; k++;
 		cout << "4. Ipconfig ." << endl; k++;
+		cout << "5. nhap lenh ." << endl; k++;
 
 		cout << "0. thoat ." << endl; k++;
 		cout << "nhap lua chon: " << endl;
@@ -70,6 +82,7 @@ void main(){
 
 	int cv;
 	string ip_connect;
+	string shell;
 
 	char data[MAX];
 
@@ -85,11 +98,11 @@ void main(){
 			cout << "nhap ip ket noi: ";
 			cin.ignore();
 			getline(cin , ip_connect);
-			writeFile(ip_connect, CONNECT);
+			writeFile(CONNECT, ip_connect);
 			readFile();
 			break;
 		case 3:
-			writeFile(ip_connect, DISCONNECT);
+			writeFile(DISCONNECT, ip_connect);
 			readFile();                         
 			cout << "da ngat ket noi voi thiet bi hien hanh " << endl;
 			break;
@@ -97,11 +110,15 @@ void main(){
 			system("ipconfig");
 			break;
 		case 5:
-			ReadLine();
+			cout << "nhap lenh " << endl;
+			cin.ignore();
+			getline(cin, shell);
+			writeFile(shell);
+			readFile();
 			break;
+
 		default:
-			cout << " nhap sai lua chon ";
-			break;
+			cout << " nhap sai lua chon \n";
 		}
 		system("pause");
 		system("cls");
