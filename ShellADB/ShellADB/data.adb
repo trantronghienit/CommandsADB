@@ -1,1 +1,1 @@
-adb version
+adb connect 192.168.1.208

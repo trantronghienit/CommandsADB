@@ -20,9 +20,11 @@ void writeFile(string ip_connect);
 void readFile(){
 	
 	string data;
+
 	fstream f;
 	//string line;
 	f.open(FILE_NAME , ios::in);
+
 	
 	while (!f.eof())
 	{
@@ -30,7 +32,6 @@ void readFile(){
 		//data += line;
 	}
 	f.close();
-
 	// truyền lệnh 
 	system(data.c_str());
 
@@ -38,26 +39,15 @@ void readFile(){
 
 
 // ghi file
-void writeFile(string shell)
+void writeFile(string ip_connect , string action)
 {
 	fstream f;
 	f.open(FILE_NAME, ios::out);   // dùng chung file
-	string data = shell;
+	string data = action + ip_connect;
 	f << data;
 
 	f.close();
 }
-
-void writeFile(string action, string ip_connect)
-{
-	fstream f;
-	f.open(FILE_NAME, ios::out);   // dùng chung file
-	string data = action + ip_connect + "\n";
-	f << data;
-
-	f.close();
-}
-
 
 int Menu(){
 
@@ -67,9 +57,11 @@ int Menu(){
 		cout << "=================== Hien Tran design=========== " << endl;
 		cout << "1. kiem tra devices." << endl; k++;
 		cout << "2. connect ADB qua mang ." << endl; k++;
-		cout << "3. Disconnect ADB qua mang. " << endl; k++;
-		cout << "4. Ipconfig ." << endl; k++;
-		cout << "5. nhap lenh ." << endl; k++;
+		cout << "3. connect ADB voi ip la 192.168.1.* ." << endl; k++;
+		cout << "4. connect ADB voi ip la 192.168.2.* ." << endl; k++;
+		cout << "5. da connect lan truoc roi ." << endl; k++;
+		cout << "6. Disconnect ADB qua mang. " << endl; k++;
+		cout << "7. Ipconfig ." << endl; k++;
 
 		cout << "0. thoat ." << endl; k++;
 		cout << "nhap lua chon: " << endl;
@@ -82,7 +74,6 @@ void main(){
 
 	int cv;
 	string ip_connect;
-	string shell;
 
 	char data[MAX];
 
@@ -98,32 +89,41 @@ void main(){
 			cout << "nhap ip ket noi: ";
 			cin.ignore();
 			getline(cin , ip_connect);
-			writeFile(CONNECT, ip_connect);
+			writeFile(ip_connect, CONNECT);
 			readFile();
 			break;
 		case 3:
-			writeFile(DISCONNECT, ip_connect);
+			cout << "ip ket noi 192.168.1.";
+			cin.ignore();
+			getline(cin, ip_connect);
+			writeFile("192.168.1." + ip_connect, CONNECT);
+			readFile();
+			break;
+		case 4:
+			cout << "ip ket noi 192.168.2.";
+			cin.ignore();
+			getline(cin, ip_connect);
+			writeFile("192.168.2." + ip_connect, CONNECT);
+			readFile();
+			break;
+		case 5:
+			readFile();
+			break;
+		case 6:
+			writeFile(ip_connect, DISCONNECT);
 			readFile();                         
 			cout << "da ngat ket noi voi thiet bi hien hanh " << endl;
 			break;
-		case 4:
+		case 7:
 			system("ipconfig");
 			break;
-		case 5:
-			cout << "nhap lenh " << endl;
-			cin.ignore();
-			getline(cin, shell);
-			writeFile(shell);
-			readFile();
-			break;
-
 		default:
-			cout << " nhap sai lua chon \n";
+			cout << " nhap sai lua chon ";
+			break;
 		}
 		system("pause");
 		system("cls");
 	} while (cv != 0);
 	
-	//getchar();
 	system("pause");
 }
