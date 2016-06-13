@@ -1,7 +1,6 @@
 ﻿#include<iostream>
 #include<fstream>
 #include<string>
-#define MAX 50
 
 
 using namespace std;
@@ -9,6 +8,7 @@ using namespace std;
 const string CONNECT = "adb connect ";
 const string DISCONNECT = "adb disconnect ";
 const string FILE_NAME= "data.adb";
+const string FILE_NAME_COMMANDS = "commands.adb";
 
 void readFile();
 int Menu();
@@ -37,6 +37,27 @@ void readFile(){
 
 }
 
+void readFile(string file_name){
+
+	string data;
+
+	fstream f;
+	//string line;
+	f.open(file_name, ios::in);
+
+
+	while (!f.eof())
+	{
+		getline(f, data);
+		//data += line;
+	}
+	f.close();
+	// truyền lệnh 
+	system(data.c_str());
+
+}
+
+
 
 // ghi file
 void writeFile(string ip_connect , string action)
@@ -44,6 +65,18 @@ void writeFile(string ip_connect , string action)
 	fstream f;
 	f.open(FILE_NAME, ios::out);   // dùng chung file
 	string data = action + ip_connect;
+	f << data;
+
+	f.close();
+}
+
+
+// ghi file
+void writeFile(string action)
+{
+	fstream f;
+	f.open(FILE_NAME_COMMANDS, ios::out);   // dùng chung file
+	string data = action;
 	f << data;
 
 	f.close();
@@ -61,7 +94,9 @@ int Menu(){
 		cout << "4. connect ADB voi ip la 192.168.2.* ." << endl; k++;
 		cout << "5. da connect lan truoc roi ." << endl; k++;
 		cout << "6. Disconnect ADB qua mang. " << endl; k++;
-		cout << "7. Ipconfig ." << endl; k++;
+		cout << "7. nhap lenh bang tay " << endl; k++;
+		cout << "8. adb help " << endl; k++;
+		cout << "10. Ipconfig ." << endl; k++;
 
 		cout << "0. thoat ." << endl; k++;
 		cout << "nhap lua chon: " << endl;
@@ -74,8 +109,7 @@ void main(){
 
 	int cv;
 	string ip_connect;
-
-	char data[MAX];
+	string command;
 
 	do{
 		cv = Menu();
@@ -115,6 +149,16 @@ void main(){
 			cout << "da ngat ket noi voi thiet bi hien hanh " << endl;
 			break;
 		case 7:
+			cout << "nhap lenh :" << endl;
+			cin.ignore();
+			getline(cin, command);
+			writeFile(command);
+			readFile(FILE_NAME_COMMANDS);
+			break;
+		case 8:
+			system("adb help");
+			break;
+		case 10:
 			system("ipconfig");
 			break;
 		default:
@@ -123,7 +167,7 @@ void main(){
 		}
 		system("pause");
 		system("cls");
-	} while (cv != 0);
+	} while (cv != 0 );
 	
 	system("pause");
 }
