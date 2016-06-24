@@ -7,6 +7,7 @@ using namespace std;
 
 const string CONNECT = "adb connect ";
 const string DISCONNECT = "adb disconnect ";
+const string GITHUB = "start https://github.com/trantronghienit/CommandsADB";
 const string FILE_NAME= "data.adb";
 const string FILE_NAME_COMMANDS = "commands.adb";
 
@@ -96,6 +97,7 @@ int Menu(){
 		cout << "6. Disconnect ADB qua mang. " << endl; k++;
 		cout << "7. nhap lenh bang tay " << endl; k++;
 		cout << "8. adb help " << endl; k++;
+		cout << "9.github of me" << endl;k++;
 		cout << "10. Ipconfig ." << endl; k++;
 
 		cout << "0. thoat ." << endl; k++;
@@ -157,6 +159,9 @@ void main(){
 			break;
 		case 8:
 			system("adb help");
+			break;
+		case 9:
+			system(GITHUB.c_str());
 			break;
 		case 10:
 			system("ipconfig");
