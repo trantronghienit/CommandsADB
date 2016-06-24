@@ -160,7 +160,7 @@ void main(){
 		case 8:
 			system("adb help");
 			break;
-		case 9:
+		case 9: // add git
 			system(GITHUB.c_str());
 			break;
 		case 10:
